@@ -1,0 +1,292 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-image: url('building.jpg');
+    background-size: cover;
+    background-position: center;
+    color: #333;
+    
+}
+
+/* Navbar Styling */
+.navbar {
+    height: 12%;
+    background-color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+}
+
+.navbar ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.navbar ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    padding: 5px 10px;
+    transition: background-color 0.3s ease;
+}
+
+.navbar ul li a:hover {
+    background-color: #76b76b;
+    border-radius: 5px;
+}
+header{
+    text-align: center;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 10px;
+}
+header h2{
+    color: black;
+    text-align: left;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 50px;
+}
+header p{
+    font-size: 30px;
+    margin-top: 10px;
+    text-align: left;
+    color: black;
+}
+.card {
+    width: 300px;
+    height: auto;
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.building-card {
+    width: 600px;
+    height: auto;
+    display: block;
+    border-radius: 10px;
+    padding:  25px;
+    box-sizing: border-box;
+    cursor: pointer;
+    margin: 50px auto;
+    background-position: center;
+    background-size: cover;
+    background-color: #f0f0f0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.building-card h1 {
+    font-size: 1.3em;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.building-card p {
+    font-size: 0.9em;
+    color: #666;
+}
+
+.building-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.building-card label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.building-card input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box; /* Ensure padding and border are included in width */
+}
+
+.building-card button {
+    width: 100%;
+    padding: 10px;
+    background-color: #27ae60;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.building-card button:hover {
+    background-color: #219150;
+}
+
+.recommendations {
+    margin-top: 20px;
+    padding: 10px;
+    background: #ecf0f1;
+    border-radius: 5px;
+    text-align: left; /* Align text to the left for recommendations */
+}
+.container {
+    display: flex;
+    justify-content: flex-start; /* Space between the boxes */
+    gap: 30px; /* Space between the boxes */
+}
+
+/* Card Container */
+.card {
+    width: 300px;  /* Adjust the width of the card */
+    margin: 0;  /* Centers the card horizontally */
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box; /* Ensures padding is included in the width */
+    text-align: center;  /* Centers the text inside */
+}
+
+/* Card Title */
+.card h1 {
+    font-size: 1.4em;
+    margin-bottom: 20px;
+    color: green;
+}
+
+/* Checkbox List */
+.checkbox-list {
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+.checkbox-list label {
+    display: block;
+    padding: 10px;
+    font-size: 1em;
+    color: #333;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.checkbox-list label:hover {
+    background-color: #f0f0f0;
+}
+
+.checkbox-list input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+/* Optional: Checkbox Item Hover Effect */
+.checkbox-list label:hover {
+    background-color: #e2e2e2;
+}
+/* Building Input Form Styling */
+.building-input {
+    width: 25%;  /* Adjusted width to fit the layout */
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    text-align: left;  /* Align text to the left to match the style */
+}
+
+/* Title Style */
+.building-input h2 {
+    font-size: 1.5em;
+    margin-bottom: 15px;
+    color: green; /* Same green color as Accessibility Options */
+}
+
+/* Form Styling */
+.building-input form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start; /* Align items to the left */
+}
+
+/* Input Field Styling */
+.building-input input {
+    width: 100%;  /* Full width for the input field */
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1em;
+}
+
+/* Button Styling */
+.building-input button {
+    padding: 10px 20px;
+    background-color: #76b76b; /* Same green color as Accessibility Options */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.building-input button:hover {
+    background-color: #219150; /* Darker green when hovering */
+}
+.image-upload {
+    width: 30%;  /* Adjusted width for the image upload section */
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    text-align: left;
+}
+
+.image-upload h2 {
+    font-size: 1.5em;
+    margin-bottom: 15px;
+    color: green; /* Same green color as other sections */
+}
+
+/* Form Styling */
+.image-upload form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Input Field Styling */
+.image-upload input {
+    width: 100%;  /* Full width for the input field */
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1em;
+}
+
+/* Button Styling */
+.image-upload button {
+    padding: 10px 20px;
+    background-color: #76b76b; /* Same green color as Accessibility Options */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.image-upload button:hover {
+    background-color: #219150; /* Darker green when hovering */
+}

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 7 - Accessibility Finder</title>
+<link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+     <!-- Navbar -->
+     <div class="navbar">
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Accessible Buildings</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Welcome Message -->
+    <header>
+        <h2>Ease Access</h2>
+        <p>Bridging Barriers one building at a time</p>
+    </header>
+    <div class="card-container">
+        <div class="building-card" id="Unique"> 
+            <h1>Building Recommender</h1>
+            <label for="productInput">Enter University Name (comma-separated):</label>
+            <input type="text" id="productInput" placeholder="Truman State University">
+            <div class="button-container">
+
+            <button id="recommendButton">Get Recommendations</button>
+            </div>
+        <div id="recommendations" class="recommendations" style="display:none;"> 
+    
+        </div>
+        <button id="closeRecommendations" style="display:none;"> Close</button>
+        </div>
+        <div class="container">
+            <!-- Accessibility Options Section -->
+            <div class="card">
+                <h1>Accessibility Options</h1>
+                <div class="checkbox-list">
+                    <label>
+                        <input type="checkbox" id="ramps">
+                        Ramps
+                    </label>
+                    <label>
+                        <input type="checkbox" id="automatic-doors">
+                        Automatic Doors
+                    </label>
+                    <label>
+                        <input type="checkbox" id="elevators">
+                        Elevators
+                    </label>
+                </div>
+            </div>
+        
+            <!-- Building Input Section -->
+            <div class="building-input">
+                <h2>Check Building Accessibility</h2>
+                <form id="building-form">
+                    <label for="building-name">Enter Building Name:</label>
+                    <input type="text" id="building-name" placeholder="Mcclain" required>
+                    <button type="submit">Check</button>
+                </form>
+                <div id="result"></div> <!-- Area to display the API response -->
+            </div>
+            <div class="image-upload">
+                <h2>Upload an Image to Detect Dominant Color</h2>
+                <form id="image-form" enctype="multipart/form-data">
+                    <label for="image-file">Choose an image:</label>
+                    <input type="file" id="image-file" name="image" accept="image/*" required>
+                    <button type="submit">Upload</button>
+                </form>
+                <div id="color-result"></div> <!-- Area to display the color detection result -->
+            </div>
+        </div>
+        <script>
+
+            document.getElementById('building-form').addEventListener('submit', async function (event) {
+    event.preventDefault(); // Prevent default form submission
+
+    const buildingName = document.getElementById('building-name').value.trim();
+    
+    if (!buildingName) {
+        document.getElementById('result').innerHTML = `<p class="error-message">Please enter a building name.</p>`;
+        return;
+    }
+
+    try {
+        const response = await fetch('/check-accessibility', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ buildingName })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            const accessibilityInfo = data.accessibilityInfo;
+            document.getElementById('result').innerHTML = `<p>${JSON.stringify(data.accessibilityInfo)}</p>`;
+
+        } else {
+            document.getElementById('result').innerHTML = `<p class="error-message">${data.error || 'Error occurred'}</p>`;
+        }
+    } catch (error) {
+        document.getElementById('result').innerHTML = `<p class="error-message">${error.message}</p>`;
+    }
+});
+
+// just create a function , a function should get the value of the building name 
+// get id of  check box and update it based on the name  using if else 
+// take building name as parameter 
+// add the specifuic checkbox that you have with id ....
+
+    // Convert the input building name to lowercase for case-insensitive matching
+    function updateCheckboxes(buildingName) {
+    const building = buildingName;
+
+    // Reset all checkboxes
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    checkboxes.forEach(checkbox => (checkbox.checked = false));
+
+    // Update checkboxes based on the building name
+    if (building === "McClain Hall") {
+        document.getElementById("ramps").checked = true;
+        document.getElementById("automatic-doors").checked = true;
+        document.getElementById("elevators").checked = true;
+
+        document.getElementById('result').innerHTML = `<p>Accessibility options for <strong>McClain Hall</strong> updated successfully!</p>`;
+    } else if (building === "Barnett Hall") {
+        document.getElementById("ramps").checked = true;
+        document.getElementById("automatic-doors").checked = true;
+
+        document.getElementById('result').innerHTML = `<p>Accessibility options for <strong>Barnett Hall</strong> updated successfully!</p>`;
+    } else if (building === "Magruder Hall") {
+        document.getElementById("ramps").checked = true;
+        document.getElementById("elevators").checked = true;
+
+        document.getElementById('result').innerHTML = `<p>Accessibility options for <strong>Magruder Hall</strong> updated successfully!</p>`;
+    } else {
+        // If building not found, display error message
+        document.getElementById('result').innerHTML = `<p class="error-message">Building <strong>${buildingName}</strong> not found in the accessibility database.</p>`;
+    }
+
+    }
+    document.getElementById('building-form').addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const buildingName = document.getElementById('building-name').value.trim();
+
+            if (!buildingName) {
+                document.getElementById('result').innerHTML = `<p class="error-message">Please enter a building name.</p>`;
+                return;
+            }
+
+            // Call the function to update checkboxes
+            updateCheckboxes(buildingName);
+        });
+        document.addEventListener('DOMContentLoaded', function () {
+            const recommendButton = document.getElementById('recommendButton');
+            const recommendationsDiv = document.getElementById('recommendations');
+            const closeRecommendationsButton = document.getElementById('closeRecommendations');
+
+            recommendButton.addEventListener('click', async () => {
+                const universityName = document.getElementById('productInput').value.trim();
+
+                if (!universityName) {
+                    recommendationsDiv.innerHTML = `<p class="error-message">Please enter a university name.</p>`;
+                    return;
+                }
+
+                recommendationsDiv.style.display = 'none';  // Hide recommendations initially
+                recommendationsDiv.innerHTML = `<p class="loading-message">Fetching recommendations...</p>`;
+
+                try {
+                    // API request to fetch the best building for disability accessibility
+                    const response = await fetch('/accessible-building', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ universityName })
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`Error: ${response.statusText}`);
+                    }
+
+                    const data = await response.json();
+
+                    if (data.error) {
+                        recommendationsDiv.innerHTML = `<p class="error-message">Error: ${data.error}</p>`;
+                    } else {
+                        // Display the building recommendation for accessibility
+                        recommendationsDiv.innerHTML = `<h3>Recommendations for ${universityName}:</h3>
+                            <p>The best building for people with disabilities: <strong>${data.bestBuilding}</strong></p>`;
+                            
+                    }
+
+                    recommendationsDiv.style.display = 'block';  // Show recommendations
+                } catch (error) {
+                    recommendationsDiv.innerHTML = `<p class="error-message">Error: ${error.message}</p>`;
+                    recommendationsDiv.style.display = 'block';
+                }
+            });
+
+            closeRecommendationsButton.addEventListener('click', () => {
+                recommendationsDiv.style.display = 'none';
+            });
+        });
+        document.getElementById('image-form').addEventListener('submit', async function (event) {
+    event.preventDefault(); // Prevent default form submission
+
+    const formData = new FormData();
+    const fileInput = document.getElementById('image-file');
+    formData.append('image', fileInput.files[0]);
+
+    try {
+        // Send the image to the server for processing
+        const response = await fetch('/upload-image', {
+            method: 'POST',
+            body: formData
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            // Display the dominant color and the color palette
+            const colorResultDiv = document.getElementById('color-result');
+            colorResultDiv.innerHTML = `
+                <h3>Dominant Color</h3>
+                <div style="width: 100px; height: 100px; background-color: ${data.dominantColor};"></div>
+                <p>${data.dominantColor}</p>
+                <h3>Color Palette</h3>
+                <div style="display: flex;">
+                    ${data.colorPalette.map(color => `<div style="width: 50px; height: 50px; background-color: ${color};"></div>`).join('')}
+                </div>
+            `;
+        } else {
+            // Handle error if there is any
+            document.getElementById('color-result').innerHTML = `<p class="error-message">${data.error}</p>`;
+        }
+    } catch (error) {
+        document.getElementById('color-result').innerHTML = `<p class="error-message">${error.message}</p>`;
+    }
+});
+
+        </script>
+        
+        
